@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shabbir Sales Logs</title>
+    <style>
+        :root {
+            --primary: #b91c1c;
+            --primary-hover: #991b1b;
+            --secondary: #1e293b;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--text-main);
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        /* HEADER */
+        .form-header {
+            background: var(--secondary);
+            padding: 2.5rem 2rem;
+            color: white;
+            text-align: left;
+            position: relative;
+        }
+
+        .form-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .form-header p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        /* FORM STYLING */
+        form {
+            padding: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            stroke: var(--primary);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            background: #fdfdfd;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.1);
+        }
+
+        /* BUTTONS */
+        .actions {
+            margin-top: 2.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        button {
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            flex: 2;
+            justify-content: center;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.2);
+        }
+
+        .btn-reset {
+            background: white;
+            color: var(--secondary);
+            border: 1.5px solid var(--border);
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-reset:hover {
+            background: #f8fafc;
+            border-color: var(--secondary);
+        }
+
+        /* STATUS MESSAGES */
+        .status-msg {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        .success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        .error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+
+        footer {
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: #f8fafc;
+            border-top: 1px solid var(--border);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            button {
+                width: 100%;
+            }
+            form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>Shabbir Sales Logs</h1>
+
+    </div>
+
+    <form id="brickForm">
+        <div class="form-grid">
+            <div class="input-group">
+                <label>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    Full Name
+                </label>
+                <input type="text" id="fullName" >
+            </div>
+
+            <div class="input-group">
+                <label>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    Email Address
+                </label>
+                <input type="email" id="email" >
+            </div>
+
+            <div class="input-group">
+                <label>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    Phone Number
+                </label>
+                <input type="tel" id="phone"  required>
+            </div>
+
+            <div class="input-group">
+                <label>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    Site Number / Code
+                </label>
+                <input type="text" id="siteNumber" >
+            </div>
+
+            <div class="input-group full-width">
+                <label>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    Complete Address
+                </label>
+                <textarea id="address" rows="2" ></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2" ry="2"></rect><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+                    Quantity of Bricks
+                </label>
+                <input type="number" id="noOfBricks" >
+            </div>
+
+            <div class="input-group">
+                <label>
+                    <svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    Rate per Brick (₹)
+                </label>
+                <input type="number" id="rateOfBricks" step="0.01" >
+            </div>
+
+            <div class="input-group">
+                <label>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    Engineer Name
+                </label>
+                <input type="text" id="engineerName" >
+            </div>
+
+            <div class="input-group">
+                <label>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                    Contractor Name
+                </label>
+                <input type="text" id="contractorName" >
+            </div>
+
+            <div class="input-group full-width">
+                <label>
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    Payment Details
+                </label>
+                <textarea id="paymentDetails" rows="2" ></textarea>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <svg class="icon" style="stroke: white;" viewBox="0 0 24 24"><polyline points="22 2 11 13 22 22"></polyline><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+SUBMIT
+            </button>
+            <button type="button" class="btn-reset" id="resetBtn">
+                Reset Form
+            </button>
+        </div>
+
+        <div id="statusMessage" class="status-msg"></div>
+    </form>
+
+    
+</div>
+
+<script>
+    // Configuration
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxziQdY0eLZJzbLhXPBFk3Fm36ugZ1KfAPgkZJxc5aOBp0PvY9JpYC8h0EXMwewoZ4rQw/exec";
+    
+    const form = document.getElementById('brickForm');
+    const statusDiv = document.getElementById('statusMessage');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function showStatus(text, type) {
+        statusDiv.textContent = text;
+        statusDiv.className = `status-msg ${type}`;
+        statusDiv.style.display = 'block';
+        if(type === 'success') setTimeout(() => { statusDiv.style.display = 'none'; }, 5000);
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Validation
+        const bricks = document.getElementById('noOfBricks').value;
+        if(bricks <= 0) {
+            showStatus("Please enter a valid brick quantity.", "error");
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Processing...";
+        showStatus("Connecting to server...", "info");
+
+        const formData = {
+            timestamp: new Date().toLocaleString(),
+            fullName: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            siteNumber: document.getElementById('siteNumber').value,
+            address: document.getElementById('address').value,
+            noOfBricks: bricks,
+            rateOfBricks: document.getElementById('rateOfBricks').value,
+            engineerName: document.getElementById('engineerName').value,
+            contractorName: document.getElementById('contractorName').value,
+            paymentDetails: document.getElementById('paymentDetails').value
+        };
+
+        try {
+            // Using no-cors as is standard for many simple Apps Script setups
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            
+            showStatus("Data successfully logged to Google Sheets!", "success");
+            form.reset();
+        } catch (err) {
+            showStatus("Failed to send data. Please check your connection.", "error");
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Sync to Google Sheets";
+        }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        form.reset();
+        statusDiv.style.display = 'none';
+    });
+</script>
+
+</body>
+</html>
